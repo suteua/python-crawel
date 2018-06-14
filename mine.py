@@ -4,6 +4,7 @@
 import requests
 from bs4 import BeautifulSoup
 from time import sleep
+from multiprocessing import Pool
 
 html = None
 links = []
@@ -71,6 +72,10 @@ for page in (1,4):
 
 car_links = None
 cars_info = []
+
+
+with Pool(10) as p:
+    records = p.map(parse, cars_links)
 
 for car in cars_links:
     cars_info.append(parse(car))
